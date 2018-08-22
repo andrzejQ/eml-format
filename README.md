@@ -2,6 +2,8 @@
 
 A pure Node.js library for parsing and building EML files, i.e. e-mail message format described in [RFC 822](http://www.ietf.org/rfc/rfc0822.txt). EML is returned by the POP3 protocol and handled by many e-mail agents like Mozilla Thunderbird or Micfosot Outlook. An EML file consists of headers and body similar to the HTTP structure.
 
+UTF-8 character encoding, as other encoding accepted in `iconv-lite` can be used.
+
 ```
 File extension: .eml
 Mime type: message/rfc822
@@ -305,10 +307,13 @@ In `emlformat.read()` `data.from` and `data.to` are set as strings with unquoted
 
 ```javascript
 var emlformat = require('eml-format');
-var message = emlformat.unquotePrintable("Join line 1=\r\n=20with line 2=0D=0A");
+var encodingChr = 'utf8';
+var message = emlformat.unquotePrintable("Join line 1=\r\n=20with line 2=0D=0A", encodingChr);
 ```
 
-### Decode "=?...?.?=" string
+`encodingChr` is 'utf8' or accepted in `iconv.decode(...., encodingChr)`, like `iso88591` or `iso-8859-1`
+
+### Decode "=?...?.?........?=" string
 ("UTF-8" or `iconv-lite` is used)
 
 ```javascript
