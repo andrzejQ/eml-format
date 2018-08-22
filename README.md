@@ -227,13 +227,12 @@ emlformat.unpack2(eml, dir, num, function(error, data) {
 ```
 
 Extracts html or plain text content and attachments to a directory from all emails
-in `mbox` file (mbox-exaple.js):
+in `mbox` file (mbox-example.js):
 
 ```javascript
 var emlformat     = require('./lib/eml-format.js');
 const Mbox        = require('node-mbox');
 const mbox        = new Mbox();
-
 var i = 0;
 // wait for message events
 mbox.on('message', function(eml) {
@@ -247,8 +246,7 @@ mbox.on('message', function(eml) {
     console.log(num+" saved **************************************************");
   });
 });
-
-// pipe stdin to mbox parser: node mbox-exaple < my.mbox
+// pipe stdin to mbox parser: node mbox-example < my.mbox
 process.stdin.pipe(mbox);
 ```
 
@@ -301,7 +299,7 @@ emlformat.fileExtensions["application/octet-stream"] = ".bin";
 
 `emlformat.getEmailAddress()` and  `emlformat.getEmailAddress()` are not used because they are not useful for multiply addresses.
 
-`data.from` and `data.to` are set as strings with unquoted names.
+In `emlformat.read()` `data.from` and `data.to` are set as strings with unquoted names.
 
 ### Decode "quoted-printable"
 
