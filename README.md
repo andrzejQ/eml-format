@@ -22,16 +22,16 @@ Lorem ipsum...
 ### Getting Started
 
 Setup
-```
-npm install -g eml-format
-```
+
+~~npm install -g eml-format~~
+
 
 Read EML file
 ```javascript
 var fs = require('fs');
 var emlformat = require('eml-format');
 
-var eml = fs.readFileSync("sample.eml", "utf-8");
+var eml = fs.readFileSync("sample.eml", "utf-8"); // for 1-byte charset: ...eml", "binary"); 
 emlformat.read(eml, function(error, data) {
   if (error) return console.log(error);
   fs.writeFileSync("sample.json", JSON.stringify(data, " ", 2));
@@ -90,6 +90,17 @@ Examples:
 
 ## Reference
 
+### Overridable properties
+
+```javascript
+var emlformat = {
+  verbose: false,
+  notCRLFboundary: true, //set true for an old emails without CRLF preceding the boundary
+  charsetDefault: 'iso-8859-1', //or 'utf-8' ... - to use if charset=... is missing
+  noTextIfHtml: true, //in unpack2() - save plain text file only in case if HTML is missing
+...
+```
+
 ### read(eml, [options], callback)
 
 Parses EML file content and return user-friendly object.
@@ -118,6 +129,18 @@ Builds an EML message.
 |----------|------|-------------|
 | data | object | E-mail data, see example |
 | callback | function(error, eml) | Callback function to be invoked when build is complete |
+
+### unpack2(eml, directory, fnamePrefix, callback)
+
+Unpacks (read) EML message and attachments to a directory; apply padding string to file names;
+set short header (From, To, Date, Subj.) in HTML and TEXT file
+
+| Argument | Type | Description |
+|----------|------|-------------|
+| eml | string or object | EML file content or object from 'parse' |
+| directory | string | Folder name or directory path where to unpack |
+| fnamePrefix | string | prefix added to content file names and attachments file names |
+| callback | function(error, data) | Callback function to be invoked when read is complete |
 
 ### unpack(eml, directory, callback)
 
@@ -187,6 +210,48 @@ emlformat.unpack(eml, dir, function(error, data) {
 });
 ```
 
+Extracts html or plain text content and attachments to a directory
+with short headers in TEXT and HTML file
+```javascript
+var fs = require('fs');
+var emlformat = require('./lib/eml-format.js');
+
+var dir = "unpacked2"; //Output directory
+var num = "00001.";//prefix for all filenames
+var eml = fs.readFileSync("sample.eml", "binary"); //"binary" if not "utf-8" case
+emlformat.unpack2(eml, dir, num, function(error, data) {
+  if (error) return console.log(error);
+  console.log(data); //List of files
+  console.log("Done!");
+});
+```
+
+Extracts html or plain text content and attachments to a directory from all emails
+in `mbox` file (mbox-exaple.js):
+
+```javascript
+var emlformat     = require('./lib/eml-format.js');
+const Mbox        = require('node-mbox');
+const mbox        = new Mbox();
+
+var i = 0;
+// wait for message events
+mbox.on('message', function(eml) {
+  var num = String(++i);
+  if (num.length < 5) num = String('00000'+num).slice(-5); //'00001'
+  num += '.';
+  console.log(num+">>>");
+  emlformat.unpack2(eml.toString("binary"), './em',num, function(error, data) {
+    if (error) return console.log(error);
+    console.log(data); //List of files
+    console.log(num+" saved **************************************************");
+  });
+});
+
+// pipe stdin to mbox parser: node mbox-exaple < my.mbox
+process.stdin.pipe(mbox);
+```
+
 ### Create an EML file
 
 ```javascript
@@ -234,21 +299,9 @@ emlformat.fileExtensions["application/octet-stream"] = ".bin";
 ```
 ### Extract e-mail address and name
 
-Plain text name
-```javascript
-var emlformat = require('eml-format');
-var data = emlformat.getEmailAddress('"Foo Bar" <foo@bar.com>');
-//data.name == "Foo Bar";
-//data.email == "foo@bar.com";
-```
+`emlformat.getEmailAddress()` and  `emlformat.getEmailAddress()` are not used because they are not useful for multiply addresses.
 
-UTF-8 encoded name
-```javascript
-var emlformat = require('eml-format');
-var data = emlformat.getEmailAddress('=?UTF-8?Q?You=E2=80=99re=20Foo=20Bar?= <foo@bar.com>');
-//data.name == "You’re Foo Bar";
-//data.email == "foo@bar.com";
-```
+`data.from` and `data.to` are set as strings with unquoted names.
 
 ### Decode "quoted-printable"
 
@@ -257,9 +310,10 @@ var emlformat = require('eml-format');
 var message = emlformat.unquotePrintable("Join line 1=\r\n=20with line 2=0D=0A");
 ```
 
-### Decode "=?UTF-8?...?=" string
+### Decode "=?...?.?=" string
+("UTF-8" or `iconv-lite` is used)
 
 ```javascript
 var emlformat = require('eml-format');
-var message = emlformat.unquoteUTF8("=?UTF-8?B?V2hhdOKAmXMgeW91ciBvbmxpbmUgc2hvcHBpbmcgc3R5bGU/?=");
+var message = emlformat.unquoteConv("=?UTF-8?B?V2hhdOKAmXMgeW91ciBvbmxpbmUgc2hvcHBpbmcgc3R5bGU/?=");
 ```
