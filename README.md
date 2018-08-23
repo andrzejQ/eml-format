@@ -320,7 +320,7 @@ var message = emlformat.unquotePrintable("Join line 1=\r\n=20with line 2=0D=0A",
 var emlformat = require('eml-format');
 var message = emlformat.unquoteConv(
   "Start: =?UTF-8?B?VGVzdDEgxITEhsSYxYHFg8OTxZrFucW7IOKCrCDEhcSHxJnFgsWEw7M=?="
-  +"=?UTF-8?Q? | =C5=9B =C5=BC =C5=BA |?="
+  +"=?UTF-8?Q? | =C5=9B=C5=BC=C5=BA |?="
   +"  ABC=?iso-8859-2?Q? =A1=C6=CA=A3=D1=D3=A6=AC=AF xyz =B1=E6=EA=B3=F1=F3=B6=BC=BF?=  stop."
-);//message: "Start: Test1 ĄĆĘŁŃÓŚŹŻ € ąćęłńó | ś ż ź |  ABC ĄĆĘŁŃÓŚŹŻ xyz ąćęłńóśźż  stop."
+);//message: "Start: Test1 ĄĆĘŁŃÓŚŹŻ € ąćęłńó | śżź |  ABC ĄĆĘŁŃÓŚŹŻ xyz ąćęłńóśźż  stop."
 ```
