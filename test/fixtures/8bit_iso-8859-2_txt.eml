@@ -1,0 +1,26 @@
+From - Mon Apr 1 10:37:49 2008
+Return-Path: <abc@op.pl>
+Delivered-To: xxy@net.pl
+Received: from x.wp.pl 
+  by m076.home.net.pl with SMTP; Mon, 5 Feb 2007 18:04:25 -0000
+Received: (wp-smtpd smtp.wp.pl 5681 invoked from network); 5 Feb 2007 19:04:14 +0100
+Date: Mon, 05 Feb 2007 19:04:14 +0100
+From: "yxx" <yxx@wp.pl>
+To: Jan Nowak <jn@net.pl>
+Subject: Start =?iso-8859-2?Q?Test1 =A1=C6=CA=A3=D1=D3=A6=AC=AF AAA =B1=E6=EA=B3=F1=F3=B6=BC=BF aaa?=
+  =?iso-8859-2?Q? XYZ =A1=C6=CA=A3=D1=D3=A6=AC=AF xyz =B1=E6=EA=B3=F1=F3=B6=BC=BF?= stop.
+Message-ID: <45c7719e852d2@wp.pl>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+
+Test1
+¡ÆÊ£ÑÓ¦¬¯ ~~ ±æê³ñó¶¼¿ ABC abc
+Test1
+
+Koniec wiadomo¶ci...
+
+--
+  Pozdrawiam,
+  Jan Nowak

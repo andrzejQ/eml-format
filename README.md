@@ -248,7 +248,7 @@ mbox.on('message', function(eml) {
     console.log(num+" saved **************************************************");
   });
 });
-// pipe stdin to mbox parser: node mbox-example < my.mbox
+// pipe stdin to mbox parser: node mbox-example < ./test/fixtures/my.mbox
 process.stdin.pipe(mbox);
 ```
 

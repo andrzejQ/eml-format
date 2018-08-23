@@ -1,0 +1,28 @@
+From - Mon Apr 13 10:37:49 2008
+Return-Path: <abc@op.pl>
+Delivered-To: xxy@net.pl
+Received: from x.wp.pl 
+  by m076.home.net.pl with SMTP; Mon, 5 Feb 2007 18:04:25 -0000
+Received: (wp-smtpd smtp.wp.pl 5681 invoked from network); 5 Feb 2007 19:04:14 +0100
+Date: Mon, 05 Feb 2007 19:04:14 +0100
+From: "yxx" <yxx@wp.pl>
+To: Jan Nowak <jn@net.pl>
+Subject: Test1 AAA aaa 
+  XYZ xyz.
+Message-ID: <xxxxxxxxxxxxx@wp.pl>
+
+Test1
+¡ÆÊ£ÑÓ¦¬¯ ~~ ±æê³ñó¶¼¿ ABC abc
+Test1
+
+Koniec wiadomo¶ci...
+
+Wiadomo¶ci bez 
+Content-Type: text/plain; charset=....
+to rzadko¶æ - np. mog± pochodziæ z formularza www niezbyt starannie oprogramowanego.
+
+emlformat.charsetDefault = 'iso-...' bêdzie wiêc bardzo rzadko potrzebne.
+
+--
+  Pozdrawiam,
+  Jan Nowak
