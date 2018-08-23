@@ -135,7 +135,7 @@ Builds an EML message.
 ### unpack2(eml, directory, fnamePrefix, callback)
 
 Unpacks (read) EML message and attachments to a directory; apply padding string to file names;
-set short header (From, To, Date, Subj.) in HTML and TEXT file (output always in UTF-8 charset);
+set short header (From, To, Date, Subj.) in HTML and TEXT file (output always with UTF-8 charset);
 
 | Argument | Type | Description |
 |----------|------|-------------|
