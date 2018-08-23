@@ -98,7 +98,7 @@ Examples:
 var emlformat = {
   verbose: false,
   notCRLFboundary: true, //set true for an old emails without CRLF preceding the boundary
-  charsetDefault: 'iso-8859-1', //or 'utf-8' ... - to use if charset=... is missing
+  charsetDefault: 'iso-8859-1', //or 'utf-8' ... - to use if charset=... is missing (rare case)
   noTextIfHtml: true, //in unpack2() - save plain text file only in case if HTML is missing
 ...
 ```
@@ -135,7 +135,7 @@ Builds an EML message.
 ### unpack2(eml, directory, fnamePrefix, callback)
 
 Unpacks (read) EML message and attachments to a directory; apply padding string to file names;
-set short header (From, To, Date, Subj.) in HTML and TEXT file
+set short header (From, To, Date, Subj.) in HTML and TEXT file (output always in UTF-8 charset);
 
 | Argument | Type | Description |
 |----------|------|-------------|
