@@ -18,8 +18,10 @@ exports["Read sample.eml"] = function(test) {
       test.ok(typeof result == "object");
       test.ok(typeof result.headers == "object");
       test.ok(typeof result.subject == "string");
-      test.ok(typeof result.from == "object");
-      test.ok(typeof result.to == "object");
+      //test.ok(typeof result.from == "object");
+      //test.ok(typeof result.to == "object");
+      test.ok(typeof result.from == "string");
+      test.ok(typeof result.to == "string");
       test.ok(typeof result.text == "string");
       test.ok(typeof result.html == "string");
       
@@ -27,20 +29,22 @@ exports["Read sample.eml"] = function(test) {
       actual = result.subject;
       test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
       
-      expected = "Foo Bar";
-      actual = result.to.name;
+      expected = '"Foo Bar" <foo.bar@example.com>';
+      actual = result.to; // actual = result.to.name;
       test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
       
-      expected = "foo.bar@example.com";
-      actual = result.to.email;
-      test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
+      //expected = "foo.bar@example.com";
+      //actual = result.to.email;
+      //test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
       
-      expected = "Online Shop";
-      actual = result.from.name;
-      test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
+      //expected = "Online Shop";
+      //actual = result.from.name;
+      //test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
       
-      expected = "no-reply@example.com";
-      actual = result.from.email;
+      //expected = "no-reply@example.com";
+      //actual = result.from.email;
+      expected = 'Online Shop <no-reply@example.com>';
+      actual = result.from;
       test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
       
       expected = "Lorem ipsum dolor sit amet";

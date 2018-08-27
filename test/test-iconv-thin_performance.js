@@ -1,7 +1,8 @@
-
 if (module.parent) // Skip this file from testing.
     return;
 
+//for other tests - in ../../ : nodeunit test 
+    
 var iconv_thin = require('../lib/iconv-thin');
 var iconv_lite = require("iconv-lite");
 

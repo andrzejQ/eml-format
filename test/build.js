@@ -6,10 +6,8 @@ exports["Build .eml file"] = function(test) {
   //E-mail data
   var data = {
     from: "no-reply@bar.com",
-    to: {
-      name: "Foo Bar",
-      email: "foo@bar.com"
-    },
+    //to: {name: "Foo Bar",  email: "foo@bar.com"},
+    to: '"Foo Bar" <foo@bar.com>',
     subject: "Winter promotions",
     text: "Lorem ipsum...",
     html: '<html><head></head><body>Lorem ipsum...<br /><img src="nodejs.png" alt="" /></body></html>',

@@ -56,12 +56,14 @@ exports["Unquote UTF8"] = function(test) {
   
   fixture = "=?UTF-8?Q?You=E2=80=99ve_added_a_card?=";
   expected = "You’ve_added_a_card";
-  actual = emlformat.unquoteUTF8(fixture);
+  //actual = emlformat.unquoteUTF8(fixture);
+  actual = emlformat.unquoteConv(fixture);
   test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
   
   fixture = "=?UTF-8?B?V2hhdOKAmXMgeW91ciBvbmxpbmUgc2hvcHBpbmcgc3R5bGU/?=";
   expected = "What’s your online shopping style?";
-  actual = emlformat.unquoteUTF8(fixture);
+  //actual = emlformat.unquoteUTF8(fixture);
+  actual = emlformat.unquoteConv(fixture);
   test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
   
   test.done(); 
@@ -72,17 +74,17 @@ exports["Unquote printable"] = function(test) {
   
   fixture = "You=E2=80=99ve added a card";
   expected = "You’ve added a card";
-  actual = emlformat.unquotePrintable(fixture);
+  actual = emlformat.unquotePrintable(fixture, 'utf8');
   test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
   
   fixture = "A line=0D=0A";
   expected = "A line\r\n";
-  actual = emlformat.unquotePrintable(fixture);
+  actual = emlformat.unquotePrintable(fixture, 'utf8');
   test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
   
   fixture = "Join line 1=\r\n=20with line 2=0D=0A";
   expected = "Join line 1 with line 2\r\n";
-  actual = emlformat.unquotePrintable(fixture);
+  actual = emlformat.unquotePrintable(fixture, 'utf8');
   test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
   
   test.done(); 
