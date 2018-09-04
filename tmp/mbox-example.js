@@ -15,8 +15,8 @@ mbox.on('message', function(eml) {
     if (error) 
       err += num+" !!!\n"+error;
     else {
-      console.log(data); //List of files
-      console.log(num+" saved **************************************************");
+      if (data.files[0]) {console.log(data.files)}; //List of attachments
+      console.log(data.indxs+" saved **************************************************");
     }
   });
 });
