@@ -100,6 +100,7 @@ var emlformat = {
   notCRLFboundary: true, //set true for an old emails without CRLF preceding the boundary
   charsetDefault: 'iso-8859-1', //or 'utf-8' ... - to use if charset=... is missing (rare case)
   noTextIfHtml: true, //in unpack2() - save plain text file only in case if HTML is missing
+  allTxtToHtml: false, //in unpack2() - save plain text file as HTML with '<br>' at line break (if true)
 ...
 ```
 
