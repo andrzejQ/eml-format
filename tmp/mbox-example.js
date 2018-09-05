@@ -3,6 +3,8 @@
 var emlformat     = require('../lib/eml-format.js');
 const Mbox        = require('node-mbox');
 const mbox        = new Mbox();
+
+emlformat.allTxtToHtml = true; //unpack2() - save plain text file as HTML with '<br>' at line break
 var i = 0;
 var err = '';
 // wait for message events
