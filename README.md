@@ -142,7 +142,7 @@ set short header (From, To, Date, Subj.) in HTML and TEXT file (output always wi
 | eml | string or object | EML file content or object from 'parse' |
 | directory | string | Folder name or directory path where to unpack |
 | fnamePrefix | string | prefix added to content file names and attachments file names |
-| callback | function(error, data) | Callback function to be invoked when read is complete |
+| callback | function(error, data) | Callback function to be invoked when read is complete; data.files - list of attachments; data.indxs - index.html and/or .txt |
 
 ### unpack(eml, directory, callback)
 
@@ -232,10 +232,11 @@ Extracts html or plain text content and attachments to a directory from all emai
 in `mbox` file (mbox-example.js):
 
 ```javascript
-var emlformat     = require('./lib/eml-format.js');
+var emlformat     = require('../lib/eml-format.js');
 const Mbox        = require('node-mbox');
 const mbox        = new Mbox();
 var i = 0;
+var err = '';
 // wait for message events
 mbox.on('message', function(eml) {
   var num = String(++i);
@@ -243,12 +244,20 @@ mbox.on('message', function(eml) {
   num += '.';
   console.log(num+">>>");
   emlformat.unpack2(eml.toString("binary"), './em',num, function(error, data) {
-    if (error) return console.log(error);
-    console.log(data); //List of files
-    console.log(num+" saved **************************************************");
+    if (error) 
+      err += num+" !!!\n"+error;
+    else {
+      if (data.files[0]) {console.log(data.files)}; //List of attachments
+      console.log(data.indxs+" saved **************************************************");
+    }
   });
 });
-// pipe stdin to mbox parser: node mbox-example < ./test/fixtures/my.mbox
+
+mbox.on('end', function() {
+  if (err) console.log('\nERRORS:\n'+err);
+});
+
+// pipe stdin to mbox parser: node mbox-example.js <../test/fixtures/my.mbox
 process.stdin.pipe(mbox);
 ```
 
@@ -324,3 +333,6 @@ var message = emlformat.unquoteConv(
   +"  ABC=?iso-8859-2?Q? =A1=C6=CA=A3=D1=D3=A6=AC=AF xyz =B1=E6=EA=B3=F1=F3=B6=BC=BF?=  stop."
 );//message: "Start: Test1 ĄĆĘŁŃÓŚŹŻ € ąćęłńó | śżź |  ABC ĄĆĘŁŃÓŚŹŻ xyz ąćęłńóśźż  stop."
 ```
+### Tests
+`npm test`
+
