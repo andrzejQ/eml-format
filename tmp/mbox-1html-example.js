@@ -15,8 +15,7 @@ emlformat.charsetDefault = 'iso-8859-1';
 
 var i = 0;
 var err = '';
-var directory = './em_1';
-var fName = 'All.html';
+var directory = './em_1';   var fName = 'All.html';
 fName = path.resolve(directory, fName);
 var dir = path.dirname(fName); if (!fs.existsSync(dir)) {fs.mkdirSync(dir);}
 fs.writeFileSync(fName, `<!doctype html><html><meta charset="UTF-8" />
@@ -32,9 +31,7 @@ div.FileList li{display:inline; padding: 0px 6px;}
 </style>
 </head><html><body>`
 );
-
-// wait for message events
-mbox.on('message', function(eml) {
+mbox.on('message', function(eml) { // wait for message events
   var num = String(++i);
   if (num.length < 5) num = String('00000'+num).slice(-5); //'00001'
   num += '.';
@@ -49,14 +46,11 @@ mbox.on('message', function(eml) {
       err += num+" !!!\n"+error;
     else {
       if (data.files[0]) {console.log(data.files)}; //List of attachments
-      //console.log(data.data_html_body);
-     fs.appendFileSync(fName, data.data_html_body);
-
+      fs.appendFileSync(fName, data.data_html_body);
       console.log(data.indxs+"-body added **************************************************");
     }
   });
 });
-
 mbox.on('end', function() {
   fs.appendFileSync(fName, '</body></html>');
   if (err) console.log('\nERRORS:\n'+err);
