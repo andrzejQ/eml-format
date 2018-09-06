@@ -13,8 +13,8 @@ mbox.on('message', function(eml) {// wait for message events
   if (num.length < 5) num = String('00000'+num).slice(-5); //'00001'
   num += '.eml';
   fs.writeFileSync(dir+num, eml);
-  console.log(num,'->', eml.slice(0,88).toString("binary").split(/[\n\r]/,1)[0]);
-});
+  console.log(num,'->', eml.slice(0,88).toString("binary").match(/.*/)[0]);
+});                                                     //1-st line of eml
 
 // pipe stdin to mbox parser: node mbox2emls < my.mbox
 process.stdin.pipe(mbox);
