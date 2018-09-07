@@ -5,6 +5,8 @@ const Mbox        = require('node-mbox');
 const mbox        = new Mbox();
 
 emlformat.allTxtToHtml = true; //unpack2() - save plain text file as HTML with '<br>' at line break
+emlformat.charsetDefault = 'utf-8';//'iso-8859-1'; 
+
 var i = 0;
 var err = '';
 // wait for message events
@@ -13,7 +15,7 @@ mbox.on('message', function(eml) {
   if (num.length < 5) num = String('00000'+num).slice(-5); //'00001'
   num += '.';
   console.log(num+">>>");
-  emlformat.unpack2(eml.toString("binary"), './em',num, function(error, data) {
+  emlformat.unpack2(eml.toString((emlformat.charsetDefault=='utf-8')?'utf8':'binary'), './em',num, function(error, data) {
     if (error) 
       err += num+" !!!\n"+error;
     else {

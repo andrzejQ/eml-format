@@ -11,7 +11,7 @@ const mbox        = new Mbox();
 
 emlformat.allTxtToHtml = true; //unpack2() - save plain text file as HTML with '<br>' at line break
 emlformat.htmlBodyStr = true; // set `data.data_html_body` as string with html body
-emlformat.charsetDefault = 'iso-8859-1';
+emlformat.charsetDefault = 'utf-8';//'iso-8859-1'; 
 
 var i = 0;
 var err = '';
@@ -41,7 +41,7 @@ mbox.on('message', function(eml) { // wait for message events
   <h2 class="nextEmail">` + num + `</h2>
   <hr>
   `);
-  emlformat.unpack2(eml.toString("binary"), directory,'atch/'+num, function(error, data) {
+  emlformat.unpack2(eml.toString((emlformat.charsetDefault=='utf-8')?'utf8':'binary'), directory,'atch/'+num, function(error, data) {
     if (error) 
       err += num+" !!!\n"+error;
     else {
