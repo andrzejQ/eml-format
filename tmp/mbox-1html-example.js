@@ -43,7 +43,7 @@ mbox.on('message', function(eml) { // wait for message events
   `);
   emlformat.unpack2(eml.toString((emlformat.charsetDefault=='utf-8')?'utf8':'binary'), directory,'atch/'+num, function(error, data) {
     if (error) 
-      err += num+" !!!\n"+error;
+      err += "\n"+num+" !!! "+error;
     else {
       if (data.files[0]) {console.log(data.files)}; //List of attachments
       fs.appendFileSync(fName, data.data_html_body);

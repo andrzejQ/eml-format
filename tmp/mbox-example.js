@@ -17,7 +17,7 @@ mbox.on('message', function(eml) {
   console.log(num+">>>");
   emlformat.unpack2(eml.toString((emlformat.charsetDefault=='utf-8')?'utf8':'binary'), './em',num, function(error, data) {
     if (error) 
-      err += num+" !!!\n"+error;
+      err += "\n"+num+" !!! "+error;
     else {
       if (data.files[0]) {console.log(data.files)}; //List of attachments
       console.log(data.indxs+" saved **************************************************");
