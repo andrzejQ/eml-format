@@ -264,9 +264,13 @@ mbox.on('end', function() {
 process.stdin.pipe(mbox);
 ```
 
-#### Concatenate all emails in `mbox` file into single HTML file with linked attachments (in `./tmp`: `node mbox-1html-example.js <../test/fixtures/my.mbox`):
+#### All emails from `mbox` with body content only (in `./tmp`: `node mbox-htmlbody-example.js <../test/fixtures/my.mbox`):
+Prepared to concatenate group of html files.
 
 ```javascript
+/********************************************************
+* ./tmp/mbox-htmlbody-example.js
+*/
 var emlformat     = require('../lib/eml-format.js');
 var fs = require("fs");
 var path = require("path");
@@ -274,12 +278,13 @@ const Mbox        = require('node-mbox');
 const mbox        = new Mbox();
 
 emlformat.allTxtToHtml = true; //unpack2() - save plain text file as HTML with '<br>' at line break
-emlformat.htmlBodyStr = true; // set `data.data_html_body` as string with html body
-emlformat.charsetDefault = 'iso-8859-1';
+emlformat.htmlBodyOnly = true; 
+emlformat.charsetDefault = 'utf-8';//'iso-8859-1';//
+
 var i = 0;
 var err = '';
-var directory = './em_1';   var fName = 'All.html';
-fName = path.resolve(directory, fName);
+var directory = './em_1';   
+var fName = path.resolve(directory, '00000.index__.html');
 var dir = path.dirname(fName); if (!fs.existsSync(dir)) {fs.mkdirSync(dir);}
 fs.writeFileSync(fName, `<!doctype html><html><meta charset="UTF-8" />
 <head>
@@ -292,7 +297,11 @@ div.FileList li{display:inline; padding: 0px 6px;}
 .plainText {font-family: monospace;}
 .nextEmail {background-color:Aqua;}
 </style>
-</head><html><body>`
+</head>
+<html><body>`
+);
+fs.writeFileSync(path.resolve(directory, '99999.index__.html'), `
+</html></body>`
 );
 // wait for message events
 mbox.on('message', function(eml) {
@@ -300,27 +309,21 @@ mbox.on('message', function(eml) {
   if (num.length < 5) num = String('00000'+num).slice(-5); //'00001'
   num += '.';
   console.log(num+">>>");
-  fs.appendFileSync(fName, `
-  <br><hr>
-  <h2 class="nextEmail">` + num + `</h2>
-  <hr>
-  `);
-  emlformat.unpack2(eml.toString("binary"), directory,'atch/'+num, function(error, data) {
+  emlformat.unpack2(eml.toString((emlformat.charsetDefault=='utf-8')?'utf8':'binary'), directory,num, function(error, data) {
     if (error) 
-      err += num+" !!!\n"+error;
+      err += "\n"+num+" !!! "+error;
     else {
       if (data.files[0]) {console.log(data.files)}; //List of attachments
-      fs.appendFileSync(fName, data.data_html_body);
-      console.log(data.indxs+"-body added **************************************************");
+      console.log(data.indxs+" saved **************************************************");
     }
   });
 });
+
 mbox.on('end', function() {
-  fs.appendFileSync(fName, '</body></html>');
   if (err) console.log('\nERRORS:\n'+err);
 });
 
-// pipe stdin to mbox parser: node mbox-1html-example.js <../test/fixtures/my.mbox 
+// pipe stdin to mbox parser: node mbox-htmlbody-example.js <../test/fixtures/my.mbox 
 process.stdin.pipe(mbox);
 ```
 
